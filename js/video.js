@@ -82,4 +82,3 @@ document.querySelector("#orig").addEventListener("click", function() {
         video.classList.remove('oldSchool');
     }
 });
-
