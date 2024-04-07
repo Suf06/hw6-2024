@@ -2,80 +2,84 @@ var video;
 
 window.addEventListener("load", function() {
 	console.log("Good job opening the window")
-	video = document.querySelector(".video");
+
+});
+
+var video;
+
+window.addEventListener("load", function() {
+    console.log("Good job opening the window");
+    video = document.querySelector('video');
     video.autoplay = false;
     video.loop = false;
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Play Button
-    document.getElementById("play").addEventListener("click", function() {
-        video.play();
-        console.log("Play Video");
-        updateVolumeInfo();
-    });
+document.querySelector("#play").addEventListener("click", function() {
+    console.log("Play Video");
+    video.play();
+    updateVolumeInfo();
+});
 
-    // Pause Button
-    document.getElementById("pause").addEventListener("click", function() {
-        video.pause();
-        console.log("Pause Video");
-    });
+document.querySelector("#pause").addEventListener("click", function() {
+    console.log("Pause Video");
+    video.pause();
+});
 
-    // Slow Down Button
-    document.getElementById("slower").addEventListener("click", function() {
-        video.playbackRate -= 0.1;
-        console.log("New speed:", video.playbackRate);
-        updateVolumeInfo();
-    });
+document.querySelector("#slower").addEventListener("click", function() {
+    video.playbackRate *= 0.9;
+    console.log("New speed is " + video.playbackRate);
+});
 
-    // Speed Up Button
-    document.getElementById("faster").addEventListener("click", function() {
-        video.playbackRate += 0.1;
-        console.log("New speed:", video.playbackRate);
-        updateVolumeInfo();
-    });
+document.querySelector("#faster").addEventListener("click", function() {
+    video.playbackRate /= 0.9;
+    console.log("New speed is " + video.playbackRate);
+});
 
-    // Skip Ahead Button
-    document.getElementById("skip").addEventListener("click", function() {
-        if (video.currentTime + 10 < video.duration) {
-            video.currentTime += 10;
-        } else {
-            video.currentTime = 0;
-        }
-        console.log("Current video location:", video.currentTime);
-    });
+document.querySelector("#skip").addEventListener("click", function() {
+    if (video.currentTime + 10 > video.duration) {
+        video.currentTime = 0;
+    } else {
+        video.currentTime += 10;
+    }
+    console.log("Current location is " + video.currentTime);
+});
 
-    // Mute Button
-    var muteButton = document.getElementById("mute");
-    muteButton.addEventListener("click", function() {
-        if (video.muted) {
-            video.muted = false;
-            muteButton.textContent = "Mute";
-        } else {
-            video.muted = true;
-            muteButton.textContent = "Unmute";
-        }
-    });
 
-    // Volume Slider
-    var volumeSlider = document.getElementById("slider");
-    volumeSlider.addEventListener("input", function() {
-        video.volume = volumeSlider.value / 100;
-        updateVolumeInfo();
-    });
+document.querySelector("#mute").addEventListener("click", function() {
+    if (video.muted) {
+        video.muted = false;
+        this.textContent = "Mute";
+		console.log("Unmute")
+    } else {
+        video.muted = true;
+        this.textContent = "Unmute";
+		console.log("Mute")
+    }
+});
+
+
+document.querySelector("#slider").addEventListener("input", function() {
+    video.volume = this.value / 100;
+    updateVolumeInfo();
+    console.log("Volume is " + video.volume);
 });
 
 function updateVolumeInfo() {
-    var volumeInfo = document.getElementById("volume");
-    volumeInfo.textContent = Math.round(video.volume * 100) + "%";
+    var volumeDisplay = document.querySelector('#volume');
+    volumeDisplay.textContent = Math.round(video.volume * 100) + "%";
 }
 
-// Styled Button - Old School
-document.getElementById("vintage").addEventListener("click", function() {
-    video.classList.add("oldSchool");
+
+document.querySelector("#vintage").addEventListener("click", function() {
+    if (!video.classList.contains('oldSchool')) {
+        video.classList.add('oldSchool');
+    }
 });
 
-// Original Button - Remove Old School class
-document.getElementById("orig").addEventListener("click", function() {
-    video.classList.remove("oldSchool");
+
+document.querySelector("#orig").addEventListener("click", function() {
+    if (video.classList.contains('oldSchool')) {
+        video.classList.remove('oldSchool');
+    }
 });
+
